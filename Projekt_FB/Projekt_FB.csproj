@@ -14,6 +14,7 @@
     <None Remove="exit_icon.png" />
     <None Remove="forestCar.jpg" />
     <None Remove="mickeyMouseHouse.png" />
+    <None Remove="playButton.jpg" />
     <None Remove="spelling.jpg" />
     <None Remove="sztaluga.jpg" />
   </ItemGroup>
@@ -24,6 +25,7 @@
     <Resource Include="exit_icon.png" />
     <Resource Include="forestCar.jpg" />
     <Resource Include="mickeyMouseHouse.png" />
+    <Resource Include="playButton.jpg" />
     <Resource Include="spelling.jpg" />
     <Resource Include="sztaluga.jpg" />
   </ItemGroup>

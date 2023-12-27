@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,6 +25,7 @@ namespace Projekt_FB
         {
             InitializeComponent();
             mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+            mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
         }
@@ -31,42 +34,45 @@ namespace Projekt_FB
         {
             // Rozpoczęcie odtwarzania i uruchomienie odliczania czasu
             mediaPlayer.Play();
-            timer.Start();
 
-
-            Slider newSlider = new Slider();
-            newSlider.Width = 710;
-            
-            newSlider.ValueChanged += (s, ev) =>
+            if (!timer.IsEnabled) // Dodaj warunek sprawdzający czy timer jest już uruchomiony
             {
-                // Ustawienie nowej pozycji na podstawie wartości suwaka
-                TimeSpan newTime = TimeSpan.FromSeconds(newSlider.Value);
-                mediaPlayer.Position = newTime;
-            };
+                timer.Start();
+            }
 
-            StackPanel stackPanel = (StackPanel)lesnySamochodzikButton.Parent;
-            stackPanel.Children.Add(newSlider);
+            Slider existingSlider = fairyTalesMenu.Children.OfType<Slider>().FirstOrDefault();
+            if (existingSlider == null)
+            {
+                Slider newSlider = new Slider();
+                newSlider.Width = 700;
 
+                newSlider.ValueChanged += (s, ev) =>
+                {
+                    // Ustawienie nowej pozycji na podstawie wartości suwaka
+                    TimeSpan newTime = TimeSpan.FromSeconds(newSlider.Value);
+                    mediaPlayer.Position = newTime;
+                };
 
-
-
-
-
-
-            newSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                fairyTalesMenu.Children.Add(newSlider);
+                newSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            }
         }
-
 
         private void MediaPlayer_MediaEnded(object sender, EventArgs e)
         {
-            // Odtwarzanie zostało zakończone, usuń Slider
+            // Odtwarzanie zostało zakończone, zatrzymaj odtwarzanie i usuń Slider
+            mediaPlayer.Stop();
+            timer.Stop();
+
             Slider sliderToRemove = fairyTalesMenu.Children.OfType<Slider>().FirstOrDefault();
             if (sliderToRemove != null)
             {
                 fairyTalesMenu.Children.Remove(sliderToRemove);
             }
-        }
 
+            mediaPlayer.Close();
+
+        }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -80,6 +86,7 @@ namespace Projekt_FB
                 }
             }
         }
+
 
         private void paintingButton_Click(object sender, RoutedEventArgs e)
         {
