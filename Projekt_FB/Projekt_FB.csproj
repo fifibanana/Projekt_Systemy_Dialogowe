@@ -15,6 +15,7 @@
     <None Remove="forestCar.jpg" />
     <None Remove="mickeyMouseHouse.png" />
     <None Remove="playButton.jpg" />
+    <None Remove="slowabackground.jpg" />
     <None Remove="spelling.jpg" />
     <None Remove="sztaluga.jpg" />
   </ItemGroup>
@@ -44,6 +45,9 @@
     <Resource Include="forestCar.jpg" />
     <Resource Include="mickeyMouseHouse.png" />
     <Resource Include="playButton.jpg" />
+    <Resource Include="slowabackground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="spelling.jpg" />
     <Resource Include="sztaluga.jpg" />
   </ItemGroup>

@@ -210,7 +210,6 @@ namespace Projekt_FB
                 mediaPlayer.Close();
             }
             wordInputTextBox.Clear();
-            wordInputTextBox.Visibility = Visibility.Hidden;
             randomWordTextBlock.Text = "";
             speechRecognitionEngine.RecognizeAsyncCancel();
             isSpeechRecognitionEnabled = false;
@@ -322,5 +321,9 @@ namespace Projekt_FB
             speechSynthesizer.SetOutputToDefaultAudioDevice();
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

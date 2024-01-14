@@ -36,57 +36,58 @@
     <Grid>
         <Grid x:Name="mainMenu" Visibility="Visible" >
             <Image HorizontalAlignment="Left" Height="816" VerticalAlignment="Top" Width="1390" Source="/405614-most-popular-kids-background-2799x1429-for-android.jpg"/>
-        <Button x:Name="paintingButton" HorizontalAlignment="Left" Margin="100,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="paintingButton_Click">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image x:Name="easelImage"  Width="150" Height="125" Source="/sztaluga.jpg"/>
-                <TextBlock Text="Malowanie" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
-            </StackPanel>
-        </Button>
+            <Button x:Name="paintingButton" HorizontalAlignment="Left" Margin="100,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="paintingButton_Click">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image x:Name="easelImage"  Width="150" Height="125" Source="/sztaluga.jpg"/>
+                    <TextBlock Text="Kalkulator" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
 
-        <Button x:Name="wordsButton"  HorizontalAlignment="Center" Margin="0,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="wordsButton_Click">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image x:Name="wordsImage"  Width="150" Height="125" Source="/spelling.jpg"/>
-                <TextBlock Text="Nauka słów" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
-            </StackPanel>
-        </Button>
-        <Button x:Name="fairyTalesButton" HorizontalAlignment="Right" Margin="0,532,100,0" VerticalAlignment="Top" Height="128" Width="256" Click="fairyTalesButton_Click">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image x:Name="bajkiImage"  Width="150" Height="125" Source="/bajki.png"/>
-                <TextBlock Text="Bajki audlo" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
-            </StackPanel>
-        </Button>
-        <Label x:Name="myLabel" Content="Witaj w kidApp" HorizontalAlignment="Center" VerticalAlignment="Top" Height="164" Width="516" FontSize="48" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe Print" Background="#B3FFFFFF" Margin="0,119,0,0" BorderBrush="Black">
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Red"/>
-                    <GradientStop Color="#FF71FF00" Offset="0.25"/>
-                    <GradientStop Color="#FF0084FF" Offset="0.5"/>
-                    <GradientStop Color="#FFE600FF" Offset="0.75"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Foreground>
-            <Label.RenderTransform>
-                <TranslateTransform/>
-            </Label.RenderTransform>
-            <Label.Triggers>
-                <EventTrigger RoutedEvent="Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-                            <DoubleAnimation
+            <Button x:Name="wordsButton"  HorizontalAlignment="Center" Margin="0,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="wordsButton_Click">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image x:Name="wordsImage"  Width="150" Height="125" Source="/spelling.jpg"/>
+                    <TextBlock Text="Nauka słów" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="fairyTalesButton" HorizontalAlignment="Right" Margin="0,532,100,0" VerticalAlignment="Top" Height="128" Width="256" Click="fairyTalesButton_Click">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image x:Name="bajkiImage"  Width="150" Height="125" Source="/bajki.png"/>
+                    <TextBlock Text="Bajki audio" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+            <Label x:Name="myLabel" Content="Witaj w kidApp" HorizontalAlignment="Center" VerticalAlignment="Top" Height="164" Width="516" FontSize="48" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe Print" Background="#B3FFFFFF" Margin="0,119,0,0" BorderBrush="Black">
+                <Label.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Red"/>
+                        <GradientStop Color="#FF71FF00" Offset="0.25"/>
+                        <GradientStop Color="#FF0084FF" Offset="0.5"/>
+                        <GradientStop Color="#FFE600FF" Offset="0.75"/>
+                        <GradientStop Color="Red" Offset="1"/>
+                    </LinearGradientBrush>
+                </Label.Foreground>
+                <Label.RenderTransform>
+                    <TranslateTransform/>
+                </Label.RenderTransform>
+                <Label.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimation
                         Storyboard.TargetName="myLabel"
                         Storyboard.TargetProperty="(Label.RenderTransform).(TranslateTransform.Y)"
                         From="0"
                         To="10"
                         AutoReverse="True"
                         Duration="0:0:1"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Label.Triggers>
-        </Label>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Label.Triggers>
+            </Label>
 
-    </Grid>
+        </Grid>
         <Grid x:Name="fairyTalesMenu" Visibility="Hidden">
+
             <Grid.RowDefinitions>
                 <!-- Definicja wierszy -->
                 <RowDefinition Height="Auto"/>
@@ -124,7 +125,7 @@
                 <TextBlock Text="8:22" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                 <Button x:Name="lesnySamochodzikButton" Content="" Width="100" Click="lesnySamochodzikButton_Click" >
                     <Button.Background>
-                    <ImageBrush ImageSource="/playButton.jpg"/>
+                        <ImageBrush ImageSource="/playButton.jpg"/>
                     </Button.Background>
                 </Button>
 
@@ -134,44 +135,45 @@
 
         </Grid>
         <Grid  x:Name="wordsMenu" Visibility="Hidden">
+            <Grid.Background>
+                <ImageBrush ImageSource="/slowabackground.jpg"/>
+            </Grid.Background>
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="306"/>
                 <!-- For Input Box -->
-                <RowDefinition Height="*"/>
+                <RowDefinition/>
                 <!-- For Display Area -->
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="211.04"/>
                 <!-- For Button -->
             </Grid.RowDefinitions>
 
             <!-- Input Box for User to Enter Words -->
-            <TextBox Grid.Row="0"
+            <TextBox
              x:Name="wordInputTextBox"
-             HorizontalAlignment="Stretch"
              VerticalAlignment="Center"
-             Margin="10"/>
+             Margin="447,0,447,0" Height="74" FontFamily="Comic Sans MS" FontSize="20" TextAlignment="Center" Background="{x:Null}" BorderBrush="Black" BorderThickness="3,3,3,3"/>
 
             <!-- Display Area for Random Word -->
             <TextBlock Grid.Row="1"
                x:Name="randomWordTextBlock"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               FontSize="20"
-               Margin="10"/>
+               FontSize="36" FontFamily="Comic Sans MS" FontWeight="Bold" 
+                       Text="Test" Height="52" Width="160" TextAlignment="Center"/>
 
             <!-- Button for Submitting Words -->
             <Button Grid.Row="2"
             x:Name="submitWordButton"
-            Content="Submit"
+            Content="Sprawdź!"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Margin="10"
-            Click="SubmitWordButton_Click"/>
-
-
+            Click="SubmitWordButton_Click" Height="60" Width="160" FontWeight="Bold"/>
+            <TextBox HorizontalAlignment="Center" Margin="0,46,0,0" TextWrapping="Wrap" Text="Zaznacz pole tekstowe:" VerticalAlignment="Top"  Width="160" Height="23" TextAlignment="Center" FontFamily="Comic Sans MS" TextChanged="TextBox_TextChanged" FontWeight="Bold" Background="WhiteSmoke"/>
         </Grid>
 
 
-                <Button x:Name="backToMenuButton" HorizontalAlignment="Left" Width="70" Click="backToMenuButton_Click" BorderBrush="{x:Null}" Height="70" VerticalAlignment="Bottom" Visibility="Collapsed">
+        <Button x:Name="backToMenuButton" HorizontalAlignment="Left" Width="70" Click="backToMenuButton_Click" BorderBrush="{x:Null}" Height="70" VerticalAlignment="Bottom" Visibility="Collapsed">
             <Button.Background>
                 <ImageBrush ImageSource="/exit_icon.png"/>
             </Button.Background>
@@ -182,5 +184,5 @@
             </Button.Background>
         </Button>
     </Grid>
-    
+
 </Window>
