@@ -48,4 +48,10 @@
     <Resource Include="sztaluga.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="pl-PL.grxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

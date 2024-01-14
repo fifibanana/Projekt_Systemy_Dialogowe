@@ -134,9 +134,40 @@
 
         </Grid>
         <Grid  x:Name="wordsMenu" Visibility="Hidden">
-            
-            
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- For Input Box -->
+                <RowDefinition Height="*"/>
+                <!-- For Display Area -->
+                <RowDefinition Height="Auto"/>
+                <!-- For Button -->
+            </Grid.RowDefinitions>
+
+            <!-- Input Box for User to Enter Words -->
+            <TextBox Grid.Row="0"
+             x:Name="wordInputTextBox"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Center"
+             Margin="10"/>
+
+            <!-- Display Area for Random Word -->
+            <TextBlock Grid.Row="1"
+               x:Name="randomWordTextBlock"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontSize="20"
+               Margin="10"/>
+
+            <!-- Button for Submitting Words -->
+            <Button Grid.Row="2"
+            x:Name="submitWordButton"
+            Content="Submit"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="10"
+            Click="SubmitWordButton_Click"/>
+
+
         </Grid>
 
 

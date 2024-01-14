@@ -27,10 +27,12 @@ namespace Projekt_FB
     {
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private DispatcherTimer timer = new DispatcherTimer();
-        private SpeechRecognitionEngine speechRecognitionEngine;
+        //private SpeechRecognitionEngine speechRecognitionEngine;
+        SpeechRecognitionEngine speechRecognitionEngine = new SpeechRecognitionEngine();
         private SpeechSynthesizer speechSynthesizer;
         private bool isSpeechRecognitionEnabled = false;
-
+        private List<string> words = new List<string> {"Książka",   "Dom",  "Drzewo",   "Kot",  "Pies", "Kwiat",    "Mama", "Tata", "Słońce",   "Księżyc",  "Góra", "Rzeka",    "Ryba", "Samochód", "Kolor",    "Zamek",    "Most", "Chmurka",  "Dziecko",  "Babcia",   "Dziadek",  "Serce",    "Noga", "Ręka", "Oko",  "Ucho", "Nos",  "Bułka",    "Mleko",    "Jajko",    "Ząb",  "Dół",  "Góra", "Długi",    "Krótki",   "Gruby",    "Cienki",   "Duży", "Mały", "Nowy", "Stary",    "Mokry",    "Suchy",    "Gorący",   "Zimny",    "Szybki",   "Wolny",    "Jasny",    "Ciemny",   "Łatwy",    "Trudny",   "Dobry",    "Zły",  "Słodki",   "Kwaśny",   "Szybki",   "Wolny",    "Wielki",   "Mały", "Głośny",   "Cichy",    "Brat", "Siostra",  "Przyjaciel",   "Szkoła",   "Zegar",    "Telewizor",    "Kuchnia",  "Lampa",    "Kredka",   "Farba",    "Piłka",    "Lalka",    "Samolot",  "Statek",   "Praca",    "Śmieci",   "Las",  "Woda", "Ogień",    "Ziemia",   "Piasek",   "Góra", "Wiatr",    "Deszcz",   "Śnieg",    "Ptak", "Motyl",    "Pszczoła", "Owoc", "Warzywo",  "Miasto",   "Wieś", "Gospodarstwo", "Król", "Królowa",  "Książę",   "Księżniczka",  "Dziękuję", "Proszę"
+ };
         public MainWindow()
         {
             InitializeComponent();
@@ -193,6 +195,7 @@ namespace Projekt_FB
             mainMenu.Visibility = Visibility.Visible;
             fairyTalesMenu.Visibility = Visibility.Collapsed;
             backToMenuButton.Visibility = Visibility.Hidden;
+            wordsMenu.Visibility = Visibility.Collapsed;
 
             if (mediaPlayer.Source != null) { 
                 mediaPlayer.Stop();
@@ -206,6 +209,17 @@ namespace Projekt_FB
 
                 mediaPlayer.Close();
             }
+            wordInputTextBox.Clear();
+            wordInputTextBox.Visibility = Visibility.Hidden;
+            randomWordTextBlock.Text = "";
+
+
+
+
+
+
+
+
         }
 
         //Nauka slow
@@ -217,15 +231,20 @@ namespace Projekt_FB
             // Pokaż menu bajek (fairyTalesMenu)
             wordsMenu.Visibility = Visibility.Visible;
             backToMenuButton.Visibility = Visibility.Visible;
+
+            DisplayRandomWord();
+            InitializeSpeechRecognition();
         }
 
+
+        
 
 
 
         private void InitializeSpeechRecognition()
         {
             CultureInfo cultureInfo = new CultureInfo("pl-PL"); // np. "en-US" dla angielskiego, "pl-PL" dla polskiego
-            speechRecognitionEngine = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("pl-PL"));
+
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string grammarPath = System.IO.Path.Combine(basePath, "pl-PL.grxml");
@@ -235,6 +254,7 @@ namespace Projekt_FB
             speechRecognitionEngine.LoadGrammar(grammar);
             speechRecognitionEngine.SetInputToDefaultAudioDevice();
             speechRecognitionEngine.SpeechRecognized += SpeechRecognized;
+            
         }
 
 
@@ -265,18 +285,26 @@ namespace Projekt_FB
                 textBox.SelectedText += recognizedText;
             }
             /**
-            if (recognizedText == "Wyślij formularz")
+            if (recognizedText == "Menu")
             {
                 SaveButton_Click(this, new RoutedEventArgs());
             }**/
 
         }
 
+        private void DisplayRandomWord()
+        {
+            // Randomly pick a word from the list
+            Random random = new Random();
+            string randomWord = words[random.Next(words.Count)];
 
+            // Display the selected word in the TextBlock
+            randomWordTextBlock.Text = randomWord;
+        }
 
+        private void SubmitWordButton_Click(object sender, RoutedEventArgs e)
+        {
 
-
-
-
+        }
     }
 }
