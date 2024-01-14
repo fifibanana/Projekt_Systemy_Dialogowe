@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -11,6 +12,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Markup;
+using System.Globalization;
+using Microsoft.Speech.Recognition;
+using Microsoft.Speech.Synthesis;
+using System.IO;
 
 namespace Projekt_FB
 {
@@ -21,6 +27,10 @@ namespace Projekt_FB
     {
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private DispatcherTimer timer = new DispatcherTimer();
+        private SpeechRecognitionEngine speechRecognitionEngine;
+        private SpeechSynthesizer speechSynthesizer;
+        private bool isSpeechRecognitionEnabled = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,11 +50,27 @@ namespace Projekt_FB
                 timer.Start();
             }
 
-            Slider existingSlider = fairyTalesMenu.Children.OfType<Slider>().FirstOrDefault();
+            Slider existingSlider = FindSliderInGrid(fairyTalesMenu);
+
+
             if (existingSlider == null)
             {
                 Slider newSlider = new Slider();
                 newSlider.Width = 700;
+
+                // Tworzenie obrazu z pliku
+                ImageBrush nyanCatBrush = new ImageBrush();
+                nyanCatBrush.ImageSource = new BitmapImage(new Uri("C:\\STUDIA\\ProjektWPF\\Projekt_FB\\Projekt_FB\\nyan_cat.png"));
+
+                // Ustawienie obrazu jako kciuk/slider thumb
+                ControlTemplate sliderTemplate = new ControlTemplate(typeof(Slider));
+                FrameworkElementFactory thumb = new FrameworkElementFactory(typeof(Thumb));
+                thumb.Name = "PART_Thumb";
+                thumb.SetValue(WidthProperty, 30.0);
+                thumb.SetValue(HeightProperty, 30.0);
+                thumb.SetValue(BackgroundProperty, nyanCatBrush);
+                sliderTemplate.VisualTree = thumb;
+                newSlider.Template = sliderTemplate;
 
                 newSlider.ValueChanged += (s, ev) =>
                 {
@@ -56,7 +82,13 @@ namespace Projekt_FB
                 fairyTalesMenu.Children.Add(newSlider);
                 newSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
             }
+
+
+
+
+
         }
+
 
         private void MediaPlayer_MediaEnded(object sender, EventArgs e)
         {
@@ -88,6 +120,32 @@ namespace Projekt_FB
         }
 
 
+
+        // Funkcja rekurencyjna do znalezienia Slidera w siatce
+        // Funkcja rekurencyjna do znalezienia Slidera w siatce
+        // Funkcja rekurencyjna do znalezienia slidera w siatce
+        private Slider FindSliderInGrid(Grid grid)
+        {
+            foreach (var element in grid.Children)
+            {
+                if (element is Slider slider)
+                {
+                    return slider; // Znaleziono slider
+                }
+                else if (element is Grid nestedGrid)
+                {
+                    var nestedResult = FindSliderInGrid(nestedGrid); // Rekurencyjne szukanie w zagnieżdżonym Grid
+                    if (nestedResult != null)
+                    {
+                        return nestedResult;
+                    }
+                }
+            }
+            return null; // Nie znaleziono slidera w siatce
+        }
+
+
+
         private void paintingButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -105,6 +163,7 @@ namespace Projekt_FB
 
             // Pokaż menu bajek (fairyTalesMenu)
             fairyTalesMenu.Visibility = Visibility.Visible;
+            backToMenuButton.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -128,5 +187,96 @@ namespace Projekt_FB
                 mediaPlayer.Open(new Uri("C:\\STUDIA\\ProjektWPF\\Projekt_FB\\Projekt_FB\\lesnySamochodzik.mp3"));
             }
         }
+
+        private void backToMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainMenu.Visibility = Visibility.Visible;
+            fairyTalesMenu.Visibility = Visibility.Collapsed;
+            backToMenuButton.Visibility = Visibility.Hidden;
+
+            if (mediaPlayer.Source != null) { 
+                mediaPlayer.Stop();
+                
+                Slider sliderToRemove = fairyTalesMenu.Children.OfType<Slider>().FirstOrDefault();
+                if (sliderToRemove != null)
+                {
+                    fairyTalesMenu.Children.Remove(sliderToRemove);
+                }
+
+
+                mediaPlayer.Close();
+            }
+        }
+
+        //Nauka slow
+        private void wordsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Ukryj menu główne (mainMenu)
+            mainMenu.Visibility = Visibility.Collapsed;
+
+            // Pokaż menu bajek (fairyTalesMenu)
+            wordsMenu.Visibility = Visibility.Visible;
+            backToMenuButton.Visibility = Visibility.Visible;
+        }
+
+
+
+
+        private void InitializeSpeechRecognition()
+        {
+            CultureInfo cultureInfo = new CultureInfo("pl-PL"); // np. "en-US" dla angielskiego, "pl-PL" dla polskiego
+            speechRecognitionEngine = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("pl-PL"));
+
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string grammarPath = System.IO.Path.Combine(basePath, "pl-PL.grxml");
+            Grammar grammar = LoadSrgsGrammar(grammarPath);
+
+
+            speechRecognitionEngine.LoadGrammar(grammar);
+            speechRecognitionEngine.SetInputToDefaultAudioDevice();
+            speechRecognitionEngine.SpeechRecognized += SpeechRecognized;
+        }
+
+
+        private Grammar LoadSrgsGrammar(string filePath)
+        {
+            try
+            {
+                // Tworzenie gramatyki z pliku SRGS
+                Grammar grammar = new Grammar(filePath);
+
+                return grammar;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Wystąpił błąd podczas ładowania gramatyki: {ex.Message}");
+                return null;
+            }
+        }
+
+
+
+        private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            string recognizedText = e.Result.Text;
+
+            if (Keyboard.FocusedElement is TextBox textBox && recognizedText != "Wyślij formularz")
+            {
+                textBox.SelectedText += recognizedText;
+            }
+            /**
+            if (recognizedText == "Wyślij formularz")
+            {
+                SaveButton_Click(this, new RoutedEventArgs());
+            }**/
+
+        }
+
+
+
+
+
+
+
     }
 }

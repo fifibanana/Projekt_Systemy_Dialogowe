@@ -6,8 +6,35 @@
         xmlns:local="clr-namespace:Projekt_FB"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
+    <Window.Resources>
+        <Style x:Key="SliderThumb" TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse Height="10" Width="10">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="nyan_cat.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+    </Window.Resources>
+
+
+
     <Grid>
-        <Grid x:Name="mainMenu" >
+        <Grid x:Name="mainMenu" Visibility="Visible" >
             <Image HorizontalAlignment="Left" Height="816" VerticalAlignment="Top" Width="1390" Source="/405614-most-popular-kids-background-2799x1429-for-android.jpg"/>
         <Button x:Name="paintingButton" HorizontalAlignment="Left" Margin="100,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="paintingButton_Click">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -16,7 +43,7 @@
             </StackPanel>
         </Button>
 
-        <Button x:Name="wordsButton"  HorizontalAlignment="Center" Margin="0,532,0,0" VerticalAlignment="Top" Height="128" Width="256">
+        <Button x:Name="wordsButton"  HorizontalAlignment="Center" Margin="0,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="wordsButton_Click">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Image x:Name="wordsImage"  Width="150" Height="125" Source="/spelling.jpg"/>
                 <TextBlock Text="Nauka słów" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
@@ -65,6 +92,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <!-- Dodaj więcej wierszy, jeśli potrzebujesz -->
             </Grid.RowDefinitions>
 
@@ -87,7 +115,7 @@
                         <ImageBrush ImageSource="/playButton.jpg"/>
                     </Button.Background>
                 </Button>
-                <!--Slider x:Name="slider" Width="710" VerticalAlignment="Center" ValueChanged="slider_ValueChanged"/ -->
+
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
@@ -99,15 +127,29 @@
                     <ImageBrush ImageSource="/playButton.jpg"/>
                     </Button.Background>
                 </Button>
+
             </StackPanel>
 
 
+
+        </Grid>
+        <Grid  x:Name="wordsMenu" Visibility="Hidden">
+            
+            
+            
         </Grid>
 
+
+                <Button x:Name="backToMenuButton" HorizontalAlignment="Left" Width="70" Click="backToMenuButton_Click" BorderBrush="{x:Null}" Height="70" VerticalAlignment="Bottom" Visibility="Collapsed">
+            <Button.Background>
+                <ImageBrush ImageSource="/exit_icon.png"/>
+            </Button.Background>
+        </Button>
         <Button x:Name="exitButton" HorizontalAlignment="Right" Width="70" Click="exitButton_Click" BorderBrush="{x:Null}" Height="70" VerticalAlignment="Bottom">
             <Button.Background>
                 <ImageBrush ImageSource="/exit_icon.png"/>
             </Button.Background>
         </Button>
     </Grid>
+    
 </Window>

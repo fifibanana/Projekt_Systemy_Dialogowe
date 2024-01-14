@@ -20,6 +20,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <COMReference Include="SpeechLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>11</VersionMajor>
+      <Guid>d3c4a7f2-7d27-4332-b41f-593d71e16db1</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Speech">
+      <HintPath>Microsoft.Speech.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="405614-most-popular-kids-background-2799x1429-for-android.jpg" />
     <Resource Include="bajki.png" />
     <Resource Include="exit_icon.png" />
