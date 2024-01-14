@@ -212,14 +212,8 @@ namespace Projekt_FB
             wordInputTextBox.Clear();
             wordInputTextBox.Visibility = Visibility.Hidden;
             randomWordTextBlock.Text = "";
-
-
-
-
-
-
-
-
+            speechRecognitionEngine.RecognizeAsyncCancel();
+            isSpeechRecognitionEnabled = false;
         }
 
         //Nauka slow
@@ -234,6 +228,8 @@ namespace Projekt_FB
 
             DisplayRandomWord();
             InitializeSpeechRecognition();
+            InitializeSpeechSynthesizer();
+            isSpeechRecognitionEnabled = true;
         }
 
 
@@ -254,7 +250,8 @@ namespace Projekt_FB
             speechRecognitionEngine.LoadGrammar(grammar);
             speechRecognitionEngine.SetInputToDefaultAudioDevice();
             speechRecognitionEngine.SpeechRecognized += SpeechRecognized;
-            
+            speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+
         }
 
 
@@ -280,7 +277,7 @@ namespace Projekt_FB
         {
             string recognizedText = e.Result.Text;
 
-            if (Keyboard.FocusedElement is TextBox textBox && recognizedText != "Wyślij formularz")
+            if (Keyboard.FocusedElement is TextBox textBox && recognizedText != "Menu")
             {
                 textBox.SelectedText += recognizedText;
             }
@@ -305,6 +302,25 @@ namespace Projekt_FB
         private void SubmitWordButton_Click(object sender, RoutedEventArgs e)
         {
 
+            if (randomWordTextBlock.Text == wordInputTextBox.Text)
+            {
+                speechSynthesizer.Speak("Brawo! Dobrze przeczytałeś słowo!");
+            }
+            else 
+            { 
+                speechSynthesizer.Speak("Niestety, nie udało ci się."); 
+            }
+
+            DisplayRandomWord();
+            wordInputTextBox.Clear();
+
         }
+
+        private void InitializeSpeechSynthesizer()
+        {
+            speechSynthesizer = new SpeechSynthesizer();
+            speechSynthesizer.SetOutputToDefaultAudioDevice();
+        }
+
     }
 }
