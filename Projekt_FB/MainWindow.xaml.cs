@@ -17,6 +17,7 @@ using System.Globalization;
 using Microsoft.Speech.Recognition;
 using Microsoft.Speech.Synthesis;
 using System.IO;
+using System.Data;
 
 namespace Projekt_FB
 {
@@ -33,6 +34,8 @@ namespace Projekt_FB
         private bool isSpeechRecognitionEnabled = false;
         private List<string> words = new List<string> {"Książka",   "Dom",  "Drzewo",   "Kot",  "Pies", "Kwiat",    "Mama", "Tata", "Słońce",   "Księżyc",  "Góra", "Rzeka",    "Ryba", "Samochód", "Kolor",    "Zamek",    "Most", "Chmurka",  "Dziecko",  "Babcia",   "Dziadek",  "Serce",    "Noga", "Ręka", "Oko",  "Ucho", "Nos",  "Bułka",    "Mleko",    "Jajko",    "Ząb",  "Dół",  "Góra", "Długi",    "Krótki",   "Gruby",    "Cienki",   "Duży", "Mały", "Nowy", "Stary",    "Mokry",    "Suchy",    "Gorący",   "Zimny",    "Szybki",   "Wolny",    "Jasny",    "Ciemny",   "Łatwy",    "Trudny",   "Dobry",    "Zły",  "Słodki",   "Kwaśny",   "Szybki",   "Wolny",    "Wielki",   "Mały", "Głośny",   "Cichy",    "Brat", "Siostra",  "Przyjaciel",   "Szkoła",   "Zegar",    "Telewizor",    "Kuchnia",  "Lampa",    "Kredka",   "Farba",    "Piłka",    "Lalka",    "Samolot",  "Statek",   "Praca",    "Śmieci",   "Las",  "Woda", "Ogień",    "Ziemia",   "Piasek",   "Góra", "Wiatr",    "Deszcz",   "Śnieg",    "Ptak", "Motyl",    "Pszczoła", "Owoc", "Warzywo",  "Miasto",   "Wieś", "Gospodarstwo", "Król", "Królowa",  "Książę",   "Księżniczka",  "Dziękuję", "Proszę"
  };
+        private StringBuilder input = new StringBuilder(); // Przechowuje wprowadzone przez użytkownika liczby i operatory
+        private bool isNewInput = true; // Określa, czy aktualny ciąg znaków jest nowym wprowadzeniem
         public MainWindow()
         {
             InitializeComponent();
@@ -150,7 +153,11 @@ namespace Projekt_FB
 
         private void paintingButton_Click(object sender, RoutedEventArgs e)
         {
+            mainMenu.Visibility = Visibility.Collapsed;
 
+            // Pokaż menu bajek (fairyTalesMenu)
+            calculatorMenu.Visibility = Visibility.Visible;
+            backToMenuButton.Visibility = Visibility.Visible;
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -196,7 +203,7 @@ namespace Projekt_FB
             fairyTalesMenu.Visibility = Visibility.Collapsed;
             backToMenuButton.Visibility = Visibility.Hidden;
             wordsMenu.Visibility = Visibility.Collapsed;
-
+            calculatorMenu.Visibility = Visibility.Collapsed;
             if (mediaPlayer.Source != null) { 
                 mediaPlayer.Stop();
                 
@@ -325,5 +332,108 @@ namespace Projekt_FB
         {
 
         }
+
+
+        private void HandleInput(string value)
+        {
+            if (isNewInput)
+            {
+                ResultTextBox.Text = ""; // Czyści pole tekstowe, gdy zaczynamy nowe wprowadzenie
+                isNewInput = false;
+            }
+
+            input.Append(value); // Dodaje wartość (liczbę lub operator) do aktualnego wprowadzenia
+            ResultTextBox.Text += value; // Aktualizuje pole tekstowe o dodaną wartość
+        }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("1");
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("2");
+        }
+
+        private void Button3_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("3");
+        }
+
+        private void button4_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("4");
+        }
+
+        private void button5_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("5");
+        }
+
+        private void button6_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("6");
+
+        }
+
+        private void button7_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("7");
+        }
+
+        private void button8_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("8");
+        }
+
+        private void button9_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("9");
+        }
+
+        private void button0_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("0");
+        }
+
+        private void ButtonPlus_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("+");
+        }
+        private void buttonMinus_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("-");
+        }
+        private void buttonTimes_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("*");
+        }
+
+        private void buttonDivide_Click(object sender, RoutedEventArgs e)
+        {
+            HandleInput("/");
+        }
+
+        private void buttonCount_Click(object sender, RoutedEventArgs e)
+        {
+            string expression = ResultTextBox.Text;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                var result = dt.Compute(expression, ""); // Obliczanie wyrażenia przy użyciu DataTable
+
+                ResultTextBox.Text = result.ToString(); // Wyświetlenie wyniku w polu tekstowym
+                isNewInput = true; // Ustawienie flagi na nowe wprowadzenie
+                input.Clear(); // Wyczyszczenie bufora wprowadzania
+            }
+            catch (Exception ex)
+            {
+                ResultTextBox.Text = "Błąd"; // Informacja o błędzie w przypadku niepowodzenia obliczeń
+            }
+        }
+
+
     }
 }

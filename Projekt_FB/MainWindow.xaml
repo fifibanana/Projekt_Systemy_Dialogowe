@@ -25,6 +25,29 @@
 
 
 
+        <ImageBrush x:Key="ButtonImage" ImageSource="/number3.png"></ImageBrush>
+        <Style TargetType="Button" x:Key="ButtonStyled">
+            <Setter Property="Background" Value="{StaticResource ButtonImage}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
 
 
 
@@ -38,7 +61,11 @@
             <Image HorizontalAlignment="Left" Height="816" VerticalAlignment="Top" Width="1390" Source="/405614-most-popular-kids-background-2799x1429-for-android.jpg"/>
             <Button x:Name="paintingButton" HorizontalAlignment="Left" Margin="100,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="paintingButton_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image x:Name="easelImage"  Width="150" Height="125" Source="/sztaluga.jpg"/>
+                    <Image x:Name="easelImage"  Width="150" Height="125" Source="/calcicon.jpg">
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="/calcicon.jpg"/>
+                        </Image.OpacityMask>
+                    </Image>
                     <TextBlock Text="Kalkulator" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Right" Margin="0,0,30,0" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
@@ -172,6 +199,131 @@
             <TextBox HorizontalAlignment="Center" Margin="0,46,0,0" TextWrapping="Wrap" Text="Zaznacz pole tekstowe:" VerticalAlignment="Top"  Width="160" Height="23" TextAlignment="Center" FontFamily="Comic Sans MS" TextChanged="TextBox_TextChanged" FontWeight="Bold" Background="WhiteSmoke"/>
         </Grid>
 
+        <Grid x:Name="calculatorMenu" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="ResultTextBox" IsReadOnly="True" TextAlignment="Right" Margin="10" FontSize="24" Text="0" FontWeight="Bold"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+
+                </Grid.ColumnDefinitions>
+                <Button x:Name="button1" Style="{StaticResource ButtonStyled}" Grid.Column="0"  FontSize="20" Click="Button1_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number1.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="button2" Style="{StaticResource ButtonStyled}" Grid.Column="1"  FontSize="20" Click="Button2_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number2.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="button3" Style="{StaticResource ButtonStyled}" Grid.Column="2"  FontSize="20" Click="Button3_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number3.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="buttonPlus" Style="{StaticResource ButtonStyled}" Grid.Column="3"  FontSize="20" Click="ButtonPlus_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/plusicon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="button4" Style="{StaticResource ButtonStyled}" Grid.Column="0"  FontSize="20" Click="button4_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number4.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="button5" Style="{StaticResource ButtonStyled}" Grid.Column="1"  FontSize="20" Click="button5_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number5.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="button6" Style="{StaticResource ButtonStyled}" Grid.Column="2"  FontSize="20" Click="button6_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number6.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="buttonMinus" Style="{StaticResource ButtonStyled}" Grid.Column="3"  FontSize="20" Click="buttonMinus_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/minus.jpg" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="button7" Style="{StaticResource ButtonStyled}" Grid.Column="0"  FontSize="20" Click="button7_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number7.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="button8" Style="{StaticResource ButtonStyled}" Grid.Column="1"  FontSize="20" Click="button8_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number8.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="button9" Style="{StaticResource ButtonStyled}" Grid.Column="2"  FontSize="20" Click="button9_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/number9.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="buttonTimes" Style="{StaticResource ButtonStyled}" Grid.Column="3"  FontSize="20" Click="buttonTimes_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/times.jpg" Stretch="Uniform"/>
+                    </Button.Background>
+
+                </Button>
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="button0" Style="{StaticResource ButtonStyled}" Grid.Column="0"  FontSize="20" Click="button0_Click">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/number0.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="buttonCount" Style="{StaticResource ButtonStyled}" Grid.Column="1" Content="Oblicz" FontSize="20" Background="#FFE4FFFC" Click="buttonCount_Click" />
+
+                <Button x:Name="speakButton" Style="{StaticResource ButtonStyled}" Grid.Column="2" Content="" FontSize="20" Click="buttonCount_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/microphone.jfif" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+
+
+                <Button x:Name="buttonDivide" Style="{StaticResource ButtonStyled}" Grid.Column="3"  FontSize="20" Click="buttonDivide_Click" BorderBrush="#FFF76666" Margin="0,0,76,0" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/divide.jpg" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+
+            </Grid>
+        </Grid>
+
 
         <Button x:Name="backToMenuButton" HorizontalAlignment="Left" Width="70" Click="backToMenuButton_Click" BorderBrush="{x:Null}" Height="70" VerticalAlignment="Bottom" Visibility="Collapsed">
             <Button.Background>
@@ -183,6 +335,7 @@
                 <ImageBrush ImageSource="/exit_icon.png"/>
             </Button.Background>
         </Button>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="1497,623,0,0" VerticalAlignment="Top" Width="0"/>
     </Grid>
 
 </Window>
