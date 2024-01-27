@@ -93,6 +93,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="kalkulator.grxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="menuGrammar.grxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="pl-PL.grxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

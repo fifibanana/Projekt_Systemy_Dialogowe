@@ -1,0 +1,65 @@
+<grammar version="1.0" xml:lang="pl-PL" xmlns="http://www.w3.org/2001/06/grammar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/06/grammar http://www.w3.org/TR/speech-grammar/grammar.xsd" root="rootRule">
+	<rule id="rootRule" scope="public">
+		<one-of>
+			<item>
+				<ruleref uri="#kalkulator"/>
+			</item>
+		</one-of>
+	</rule>
+	<rule id="kalkulator" scope="public">
+		<one-of>
+			<item>
+				<ruleref uri="#liczba"/>
+				<ruleref uri="#dodawanie"/>
+				<ruleref uri="#liczba"/>
+			</item>
+			<item>
+				<ruleref uri="#liczba"/>
+				<ruleref uri="#odejmowanie"/>
+				<ruleref uri="#liczba"/>
+			</item>
+			<item>
+				<ruleref uri="#liczba"/>
+				<ruleref uri="#mnozenie"/>
+				<ruleref uri="#liczba"/>
+			</item>
+			<item>
+				<ruleref uri="#liczba"/>
+				<ruleref uri="#dzielenie"/>
+				<ruleref uri="#liczba"/>
+			</item>
+			<item>
+				<ruleref uri="#quit"/>
+			</item>
+		</one-of>
+	</rule>
+	<rule id="dodawanie" scope="public">
+		<item>Dodaj</item>
+	</rule>
+	<rule id="odejmowanie" scope="public">
+		<item>Odejmij</item>
+	</rule>
+	<rule id="mnozenie" scope="public">
+		<item>Pomnóż</item>
+	</rule>
+	<rule id="dzielenie" scope="public">
+		<item>Podziel</item>
+	</rule>
+	<rule id="quit" scope="public">
+		<item>Wyjdź</item>
+	</rule>
+	<rule id="liczba" scope="public">
+		<one-of>
+			<item>zero</item>
+			<item>jeden</item>
+			<item>dwa</item>
+			<item>trzy</item>
+			<item>cztery</item>
+			<item>pięć</item>
+			<item>sześć</item>
+			<item>siedem</item>
+			<item>osiem</item>
+			<item>dziewięć</item>
+		</one-of>
+	</rule>
+</grammar>

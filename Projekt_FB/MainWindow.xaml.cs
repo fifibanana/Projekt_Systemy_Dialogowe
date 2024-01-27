@@ -46,8 +46,13 @@ namespace Projekt_FB
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             TestDatabaseToXmlConversion();
+            InitializeSpeechRecognitionMenu();
         }
 
+
+
+
+        //not used
         private void MediaPlayer_MediaOpened(object sender, EventArgs e)
         {
             // Rozpoczęcie odtwarzania i uruchomienie odliczania czasu
@@ -184,8 +189,10 @@ namespace Projekt_FB
             mainMenu.Visibility = Visibility.Collapsed;
 
             // Pokaż menu bajek (fairyTalesMenu)
+            ResultTextBox.Text = "";
             calculatorMenu.Visibility = Visibility.Visible;
             backToMenuButton.Visibility = Visibility.Visible;
+            InitializeSpeechRecognitionCalculator();
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -246,8 +253,10 @@ namespace Projekt_FB
             }
             wordInputTextBox.Clear();
             randomWordTextBlock.Text = "";
-            speechRecognitionEngine.RecognizeAsyncCancel();
-            isSpeechRecognitionEnabled = false;
+            //speechRecognitionEngine.RecognizeAsyncCancel();
+            //isSpeechRecognitionEnabled = false;
+            //speechRecognitionEngine.RecognizeAsync();
+            //isSpeechRecognitionEnabled = true;
         }
 
         //Nauka slow
@@ -267,8 +276,41 @@ namespace Projekt_FB
         }
 
 
-        
 
+        private void InitializeSpeechRecognitionMenu()
+        {
+            CultureInfo cultureInfo = new CultureInfo("pl-PL"); // np. "en-US" dla angielskiego, "pl-PL" dla polskiego
+
+
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string grammarPath = System.IO.Path.Combine(basePath, "menuGrammar.grxml");
+            Grammar grammar = LoadSrgsGrammar(grammarPath);
+
+
+            speechRecognitionEngine.LoadGrammar(grammar);
+            speechRecognitionEngine.SetInputToDefaultAudioDevice();
+            speechRecognitionEngine.SpeechRecognized += SpeechRecognizedMenu;
+            speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+
+        }
+
+
+        private void InitializeSpeechRecognitionCalculator()
+        {
+            CultureInfo cultureInfo = new CultureInfo("pl-PL"); // np. "en-US" dla angielskiego, "pl-PL" dla polskiego
+
+
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string grammarPath = System.IO.Path.Combine(basePath, "kalkulator.grxml");
+            Grammar grammar = LoadSrgsGrammar(grammarPath);
+
+
+            speechRecognitionEngine.LoadGrammar(grammar);
+            //speechRecognitionEngine.SetInputToDefaultAudioDevice();
+            speechRecognitionEngine.SpeechRecognized += SpeechRecognizedCalc;
+            //speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+
+        }
 
 
         private void InitializeSpeechRecognition()
@@ -282,9 +324,9 @@ namespace Projekt_FB
 
 
             speechRecognitionEngine.LoadGrammar(grammar);
-            speechRecognitionEngine.SetInputToDefaultAudioDevice();
+            //speechRecognitionEngine.SetInputToDefaultAudioDevice();
             speechRecognitionEngine.SpeechRecognized += SpeechRecognized;
-            speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+            //speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
 
         }
 
@@ -311,17 +353,103 @@ namespace Projekt_FB
         {
             string recognizedText = e.Result.Text;
 
-            if (Keyboard.FocusedElement is TextBox textBox && recognizedText != "Menu")
+            if (Keyboard.FocusedElement is TextBox textBox && recognizedText != "wyjdź")
             {
                 textBox.SelectedText += recognizedText;
             }
-            /**
-            if (recognizedText == "Menu")
+            
+            if (recognizedText == "wyjdź")
             {
-                SaveButton_Click(this, new RoutedEventArgs());
-            }**/
+                backToMenuButton_Click(this, new RoutedEventArgs());
+            }
+        }
+
+
+        private void SpeechRecognizedMenu(object sender, SpeechRecognizedEventArgs e)
+        {
+            string recognizedText = e.Result.Text;
+
+
+            if (recognizedText == "Kalkulator")
+            {
+                paintingButton_Click(this, new RoutedEventArgs());
+            }
+
+            if (recognizedText == "Nauka słów" || recognizedText == "Nauka")
+            {
+                wordsButton_Click(this, new RoutedEventArgs());
+            }
+
+
+            if (recognizedText == "Bajki" || recognizedText == "Bajki audio")
+            {
+                fairyTalesButton_Click(this, new RoutedEventArgs());
+            }
+
+
 
         }
+
+
+
+        private void SpeechRecognizedCalc(object sender, SpeechRecognizedEventArgs e)
+        {
+            string recognizedText = e.Result.Text;
+            string convertedText = ConvertWordsToNumbersAndOperators(recognizedText);
+
+            if (recognizedText == "Wyjdź")
+            {
+                backToMenuButton_Click(this, new RoutedEventArgs());
+            }
+            else {
+                UpdateEquation(convertedText);
+                buttonCount_Click(this, new RoutedEventArgs());
+            }
+
+
+        }
+
+        private string ConvertWordsToNumbersAndOperators(string input)
+        {
+            var wordsToNumbers = new Dictionary<string, string>()
+    {
+        { "zero", "0" },
+        { "jeden", "1" },
+        { "dwa", "2" },
+        { "trzy", "3" },
+        { "cztery", "4" },
+        { "pięć", "5" },
+        { "sześć", "6" },
+        { "siedem", "7" },
+        { "osiem", "8" },
+        { "dziewięć", "9" },
+        // Dodaj pozostałe liczby
+    };
+
+            var wordsToOperators = new Dictionary<string, string>()
+    {
+        { "Dodaj", "+" },
+        { "Odejmij", "-" },
+        { "Pomnóż", "*" },
+        { "Podziel", "/" }
+    };
+
+            var words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (wordsToNumbers.ContainsKey(words[i]))
+                {
+                    words[i] = wordsToNumbers[words[i]];
+                }
+                else if (wordsToOperators.ContainsKey(words[i]))
+                {
+                    words[i] = wordsToOperators[words[i]];
+                }
+            }
+
+            return string.Join(" ", words);
+        }
+
 
         private void DisplayRandomWord()
         {
@@ -358,10 +486,22 @@ namespace Projekt_FB
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            //nothing
         }
 
-
+        private static void UpdateEquation(string text)
+        {
+            // Pobranie referencji do TextBox z wątku UI za pomocą Dispatcher.Invoke
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (Application.Current.MainWindow != null && Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    // Wykonanie operacji na TextBox (ResultTextBox) z wątku UI
+                    mainWindow.ResultTextBox.Clear();
+                    mainWindow.ResultTextBox.AppendText(text);
+                }
+            });
+        }
         private void HandleInput(string value)
         {
             if (isNewInput)

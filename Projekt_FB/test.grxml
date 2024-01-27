@@ -171,6 +171,7 @@
       <item>stół</item>
       <item>owoc</item>
       <item>trójkąt</item>
+      <item>wyjdź</item>
     </one-of>
   </rule>
 </grammar>
