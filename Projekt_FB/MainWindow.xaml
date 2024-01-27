@@ -7,21 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
     <Window.Resources>
-        <Style x:Key="SliderThumb" TargetType="Thumb">
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Thumb">
-                        <Ellipse Height="10" Width="10">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="nyan_cat.png"></ImageBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
+
 
 
 
@@ -57,7 +44,7 @@
 
 
     <Grid>
-        <Grid x:Name="mainMenu" Visibility="Visible" >
+        <Grid x:Name="mainMenu" Visibility="Hidden" >
             <Image HorizontalAlignment="Left" Height="816" VerticalAlignment="Top" Width="1390" Source="/405614-most-popular-kids-background-2799x1429-for-android.jpg"/>
             <Button x:Name="paintingButton" HorizontalAlignment="Left" Margin="100,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="paintingButton_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -113,8 +100,7 @@
             </Label>
 
         </Grid>
-        <Grid x:Name="fairyTalesMenu" Visibility="Hidden">
-
+        <Grid x:Name="fairyTalesMenu" Visibility="Visible">
             <Grid.RowDefinitions>
                 <!-- Definicja wierszy -->
                 <RowDefinition Height="Auto"/>
@@ -143,7 +129,7 @@
                         <ImageBrush ImageSource="/playButton.jpg"/>
                     </Button.Background>
                 </Button>
-
+                <!-- Slider x:Name="slider" Width="710" VerticalAlignment="Center" ValueChanged="slider_ValueChanged" -->
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
@@ -155,10 +141,9 @@
                         <ImageBrush ImageSource="/playButton.jpg"/>
                     </Button.Background>
                 </Button>
-
             </StackPanel>
-
-
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="50">
+            </StackPanel>
 
         </Grid>
         <Grid  x:Name="wordsMenu" Visibility="Hidden">
