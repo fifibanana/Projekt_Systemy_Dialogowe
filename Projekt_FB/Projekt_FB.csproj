@@ -50,6 +50,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Microsoft.Speech">
       <HintPath>Microsoft.Speech.dll</HintPath>
     </Reference>
@@ -90,6 +94,9 @@
 
   <ItemGroup>
     <None Update="pl-PL.grxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="test.grxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

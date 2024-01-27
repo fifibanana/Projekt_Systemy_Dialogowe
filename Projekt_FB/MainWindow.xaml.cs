@@ -18,6 +18,7 @@ using Microsoft.Speech.Recognition;
 using Microsoft.Speech.Synthesis;
 using System.IO;
 using System.Data;
+using System.Xml.Linq;
 
 namespace Projekt_FB
 {
@@ -26,6 +27,7 @@ namespace Projekt_FB
     /// </summary>
     public partial class MainWindow : Window
     {
+
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private DispatcherTimer timer = new DispatcherTimer();
         //private SpeechRecognitionEngine speechRecognitionEngine;
@@ -43,6 +45,7 @@ namespace Projekt_FB
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
+            TestDatabaseToXmlConversion();
         }
 
         private void MediaPlayer_MediaOpened(object sender, EventArgs e)
@@ -274,7 +277,7 @@ namespace Projekt_FB
 
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string grammarPath = System.IO.Path.Combine(basePath, "pl-PL.grxml");
+            string grammarPath = System.IO.Path.Combine(basePath, "test.grxml");
             Grammar grammar = LoadSrgsGrammar(grammarPath);
 
 
@@ -458,6 +461,25 @@ namespace Projekt_FB
                 ResultTextBox.Text = "Błąd"; // Informacja o błędzie w przypadku niepowodzenia obliczeń
             }
         }
+
+
+        private void TestDatabaseToXmlConversion()
+        {
+            try
+            {
+                var converter = new DatabaseToXmlConverter("Host=localhost;Port=5433;Database=postgres;User Id=postgres;Password=postgres;\r\n");
+                XDocument xmlDocument = converter.CreateXmlFromDatabase();
+                // Optionally, save to a file or process the document as needed
+                xmlDocument.Save("C:\\STUDIA\\ProjektWPF\\Projekt_FB\\Projekt_FB\\test.grxml");
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions, possibly display an error message
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+
 
 
     }

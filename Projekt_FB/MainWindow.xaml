@@ -44,7 +44,7 @@
 
 
     <Grid>
-        <Grid x:Name="mainMenu" Visibility="Hidden" >
+        <Grid x:Name="mainMenu" Visibility="Visible" >
             <Image HorizontalAlignment="Left" Height="816" VerticalAlignment="Top" Width="1390" Source="/405614-most-popular-kids-background-2799x1429-for-android.jpg"/>
             <Button x:Name="paintingButton" HorizontalAlignment="Left" Margin="100,532,0,0" VerticalAlignment="Top" Height="128" Width="256" Click="paintingButton_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -100,7 +100,7 @@
             </Label>
 
         </Grid>
-        <Grid x:Name="fairyTalesMenu" Visibility="Visible">
+        <Grid x:Name="fairyTalesMenu" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <!-- Definicja wierszy -->
                 <RowDefinition Height="Auto"/>
